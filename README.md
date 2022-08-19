@@ -1,6 +1,6 @@
-# Tweet Classification
+# Emotion Classification
 
-This is a sentiment analysis review / comment / text classification with the BERT model from [huggingface.co](https://huggingface.co).
+This is a emotional sentiment analysis review / comment / text classification with the BERT model from [huggingface.co](https://huggingface.co).
 
 ## Specification
 
