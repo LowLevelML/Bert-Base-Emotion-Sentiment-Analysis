@@ -124,9 +124,9 @@ I am going to save to google drive, and then push to transformers
 model.save_pretrained('./model')
 tokenizer.save_pretrained('./model')
 
-!zip -r /content/model.zip /content/model/
+!cd /content && zip -r ./model.zip ./model/
 
 from google.colab import drive
 drive.mount('/content/drive')
 
-!cp -r /content/model.zip "/content/drive/My Drive/colabDownload/"
+!cd /content && cp -r ./model.zip "./drive/My Drive/colabDownload/"
