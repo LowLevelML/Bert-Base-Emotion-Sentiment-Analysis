@@ -1,4 +1,4 @@
-# Review Classification
+# Tweet Classification
 
 This is a sentiment analysis review / comment / text classification with the BERT model from [huggingface.co](https://huggingface.co).
 
