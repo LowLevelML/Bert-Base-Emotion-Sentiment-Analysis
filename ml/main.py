@@ -9,8 +9,13 @@ Original file is located at
 To run this python jupyter notebook: 
 - [open in colab](https://colab.research.google.com/github/LowLevelML/Sentiment-Analysis-Review-Classification/blob/master/ml/main.ipynb)
 
-# Import Data
+# Install packages
 """
+
+# Commented out IPython magic to ensure Python compatibility.
+# %pip install datasets transformers --user
+
+"""# Import Data"""
 
 DATASETNAME = "emotion"
 
@@ -103,13 +108,13 @@ def confusion_ma(y_true, y_pred, class_names):
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=class_names)
     disp.plot(cmap=plt.cm.Blues)
     return plt.show()
-y_valid = np.array(datasetEncoded["validation"]["label"])
-y_preds = np.argmax(preds_output.predictions, axis=1)
+yValid = np.array(datasetEncoded["validation"]["label"])
+yPreds = np.argmax(preds_output.predictions, axis=1)
 labels = ['sadness', 'joy', 'love', 'anger', 'fear', 'surprise']
 # plot_confusion_matrix(y_preds, y_valid, labels)
 # cm = confusion_matrix(y_preds, y_valid, labels, normalize=False)
 # f = sns.heatmap(cm, annot=True)
-confusion_ma(y_valid, y_preds, labels)
+confusion_ma(yValid, yPreds, labels)
 
 """# Save model to Google Drive or Transformers
 
