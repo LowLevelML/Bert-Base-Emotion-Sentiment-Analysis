@@ -12,8 +12,7 @@ To run this python jupyter notebook:
 # Install packages
 """
 
-# Commented out IPython magic to ensure Python compatibility.
-# %pip install datasets transformers --user
+!pip install datasets transformers
 
 """# Import Data"""
 
@@ -121,6 +120,8 @@ confusion_ma(yValid, yPreds, labels)
 I am going to save to google drive, and then push to transformers
 """
 
+tfModel = model.from_pretrained('./model', from_pt=True)
+tfModel.save_pretrained('./model')
 model.save_pretrained('./model')
 tokenizer.save_pretrained('./model')
 
