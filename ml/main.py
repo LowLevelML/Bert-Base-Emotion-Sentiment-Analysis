@@ -55,20 +55,20 @@ datasetEncoded['train'][0]
 from transformers import AutoModelForSequenceClassification, AutoConfig
 # define the mappings as dictionaries
 label2id = {
-    "0": "Sad",
-    "1": "Joy",
-    "2": "Love",
-    "3": "Anger",
-    "4": "Fear",
-    "5": "Surprise"
+    0: "Sad",
+    1: "Joy",
+    2: "Love",
+    3: "Anger",
+    4: "Fear",
+    5: "Surprise"
 }
 id2label = {
-    "Sad": "0",
-    "Joy": "1",
-    "Love": "2",
-    "Anger": "3",
-    "Fear": "4",
-    "Surprise": "5"
+    "Sad": 0,
+    "Joy": 1,
+    "Love": 2,
+    "Anger": 3,
+    "Fear": 4,
+    "Surprise": 5
 }
 # use auto config so taht you can change model name and it will auto detect
 # define config
