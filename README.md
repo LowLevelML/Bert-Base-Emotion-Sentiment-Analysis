@@ -1,5 +1,7 @@
 # Emotion Classification
 
+Check this model on huggingface: [Thamognya/Bert-Base-Emotion-Sentiment-Analysis](https://huggingface.co/Thamognya/Bert-Base-Emotion-Sentiment-Analysis)
+
 This is a emotional sentiment analysis review / comment / text classification with the BERT model from [huggingface.co](https://huggingface.co).
 
 ## Machine Learning
