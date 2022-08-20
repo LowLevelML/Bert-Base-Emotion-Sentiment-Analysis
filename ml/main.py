@@ -13,6 +13,7 @@ To run this python jupyter notebook:
 """
 
 !pip install datasets transformers
+!pip install cloud-tpu-client==0.10 torch==1.12.0 https://storage.googleapis.com/tpu-pytorch/wheels/colab/torch_xla-1.12-cp37-cp37m-linux_x86_64.whl
 
 """# Import Data"""
 
@@ -22,10 +23,14 @@ from datasets import load_dataset
 dataset = load_dataset(DATASETNAME)
 
 import torch
+import torch_xla
+import torch_xla.core.xla_model as xm
 if torch.cuda.is_available():
 	deviceName = "cuda"
 else:
 	deviceName = "cpu"
+
+# deviceName = xm.xla_device()
 device = torch.device(deviceName)
 
 """# Preprocess Data"""
@@ -43,10 +48,44 @@ datasetEncoded = dataset.map(tokenize, batched=True, batch_size=None)
 
 datasetEncoded['train'][0]
 
-from transformers import AutoModelForSequenceClassification
+from transformers import AutoModelForSequenceClassification, AutoConfig
+"""
+  "id2label": {
+    "0": "negative",
+    "1": "neutral",
+    "2": "positive"
+  },
+  "initializer_range": 0.02,
+  "label2id": {
+    "negative": 0,
+    "neutral": 1,
+    "positive": 2
+  },
+"""
+# define the mappings as dictionaries
+label2id = {
+    "0": "Sad",
+    "1": "Joy",
+    "2": "Love",
+    "3": "Anger",
+    "4": "Fear",
+    "5": "Surprise"
+}
+id2label = {
+    "Sad": "0",
+    "Joy": "1",
+    "Love": "2",
+    "Anger": "3",
+    "Fear": "4",
+    "Surprise": "5"
+}
 
-num_labels = 6
-model = (AutoModelForSequenceClassification.from_pretrained(MODELNAME, num_labels=num_labels).to(device))
+# use auto config so taht you can change model name and it will auto detect
+# define config
+config = AutoConfig.from_pretrained(MODELNAME, label2id=label2id, id2label=id2label)
+# config done
+numLabels = 6
+model = (AutoModelForSequenceClassification.from_pretrained(MODELNAME, config=config).to(device))
 
 datasetEncoded["train"].features
 
@@ -86,7 +125,8 @@ trainer = Trainer(model=model, args=training_args,
                   compute_metrics=compute_metrics,
                   train_dataset=datasetEncoded["train"],
                   eval_dataset=datasetEncoded["validation"])
-trainer.train();
+
+trainer.train()
 
 results = trainer.evaluate()
 results
@@ -120,9 +160,9 @@ confusion_ma(yValid, yPreds, labels)
 I am going to save to google drive, and then push to transformers
 """
 
-tfModel = model.from_pretrained('./model', from_pt=True)
-tfModel.save_pretrained('./model')
+# save pytorch model
 model.save_pretrained('./model')
+# Save
 tokenizer.save_pretrained('./model')
 
 !cd /content && zip -r ./model.zip ./model/
